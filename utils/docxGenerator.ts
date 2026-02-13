@@ -1,5 +1,5 @@
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, Table, TableRow, TableCell, WidthType, BorderStyle, AlignmentType, Header, Footer } from "docx";
-import saveAs from "file-saver";
+import FileSaver from "file-saver";
 import { GeneratedLessonPlan } from "../types";
 
 export const generateDocx = async (plan: GeneratedLessonPlan) => {
@@ -163,5 +163,5 @@ export const generateDocx = async (plan: GeneratedLessonPlan) => {
   });
 
   const blob = await Packer.toBlob(doc);
-  saveAs(blob, `Plan_${plan.generalData.subject.replace(/\s/g, '_')}_${currentDate}.docx`);
+  FileSaver.saveAs(blob, `Plan_${plan.generalData.subject.replace(/\s/g, '_')}_${currentDate}.docx`);
 };

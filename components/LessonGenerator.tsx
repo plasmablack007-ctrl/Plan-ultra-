@@ -4,6 +4,13 @@ import { generateLessonPlanAI, generateAssessmentAI, generateAdaptationAI, gener
 import { generateDocx } from '../utils/docxGenerator';
 import { SparklesIcon, ArrowPathIcon, PrinterIcon, DocumentArrowUpIcon, XMarkIcon, PhotoIcon, AcademicCapIcon, BookOpenIcon, LightBulbIcon, ArrowDownTrayIcon, ClipboardDocumentIcon, CheckIcon, RectangleStackIcon, TableCellsIcon, HeartIcon, PuzzlePieceIcon, UserGroupIcon, DocumentTextIcon, PresentationChartBarIcon, ChatBubbleLeftRightIcon, PaperAirplaneIcon, DocumentIcon, ComputerDesktopIcon, ScissorsIcon, CpuChipIcon, ClockIcon } from '@heroicons/react/24/outline';
 
+// Extend window interface to include html2pdf
+declare global {
+  interface Window {
+    html2pdf: any;
+  }
+}
+
 interface LessonGeneratorProps {
   onPlanGenerated: (plan: GeneratedLessonPlan) => void;
 }
@@ -152,9 +159,7 @@ export const LessonGenerator: React.FC<LessonGeneratorProps> = ({ onPlanGenerate
       pagebreak:    { mode: ['css', 'legacy'] }
     };
 
-    // @ts-ignore - html2pdf is loaded via script tag in index.html
     if (window.html2pdf) {
-      // @ts-ignore
       window.html2pdf().set(opt).from(element).save();
     } else {
       alert("La librería PDF no se cargó correctamente.");
@@ -530,7 +535,6 @@ export const LessonGenerator: React.FC<LessonGeneratorProps> = ({ onPlanGenerate
                         </button>
                         <button 
                             onClick={() => handleDownloadPDF('printable-lesson-plan', 'Plan_Clase.pdf')}
-                            data-html2canvas-ignore="true"
                             className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-slate-50 rounded-lg transition-colors"
                             title="Descargar PDF"
                         >

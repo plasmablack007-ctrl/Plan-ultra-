@@ -275,7 +275,8 @@ export const generateAssessmentAI = async (request: AssessmentRequest): Promise<
   const ai = new GoogleGenAI({ apiKey });
 
   let prompt = "";
-  let responseSchema = {};
+  // Initialize responseSchema explicitly to avoid type issues or sending empty objects
+  let responseSchema: any = null;
 
   if (request.type === 'QUIZ') {
     prompt = `Create a 5-question Multiple Choice Quiz for ${request.grade} students about "${request.topic}". 

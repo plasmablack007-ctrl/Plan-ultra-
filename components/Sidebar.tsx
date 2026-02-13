@@ -7,13 +7,15 @@ import {
   ChatBubbleLeftRightIcon
 } from '@heroicons/react/24/outline';
 
+type ViewType = 'dashboard' | 'create' | 'saved' | 'review';
+
 interface SidebarProps {
-  currentView: 'dashboard' | 'create' | 'saved' | 'review';
-  setCurrentView: (view: 'dashboard' | 'create' | 'saved' | 'review') => void;
+  currentView: ViewType;
+  setCurrentView: (view: ViewType) => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView }) => {
-  const navItems = [
+  const navItems: { id: ViewType; label: string; icon: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>> }[] = [
     { id: 'dashboard', label: 'Dashboard', icon: ChartBarIcon },
     { id: 'create', label: 'Nuevo Plan', icon: PlusCircleIcon },
     { id: 'review', label: 'Repaso WhatsApp', icon: ChatBubbleLeftRightIcon },
@@ -36,7 +38,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
           return (
             <button
               key={item.id}
-              onClick={() => setCurrentView(item.id as any)}
+              onClick={() => setCurrentView(item.id)}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                 isActive 
                   ? 'bg-amber-500 text-slate-900 font-medium shadow-lg shadow-amber-500/20' 
